@@ -595,6 +595,8 @@ Application: MICROSERVICECLOUDPROVIDERDEPT, the value is the value of spring.app
 
 Status: UP (1) - spring-cloud-provider-8001, UP means the service is online, (1) means the number of services in the cluster, spring-cloud-provider-8001 is micro-service-cloud-provider-dept- 8001 The value of eureka.instance.instance-id in the configuration file application.yml.
 
+**NOTE: We are visiting the service via the url of localhost:7001\. That is to say we are not communicate with eureka, but communicate directly with 8001, via the url defined in 8001’s controller. But actually we should Communicate with Eureka, and let Eureka fetch the corresponding service instesad of us: We can visit: http://eureka7001.com/dept/get/1 instead of localhost. In next article, we will go on discussing this.**
+
 Execute the following SQL in the luxbp\_demo\_jdbc database of MySQL to prepare test data.
 
 ```mysql

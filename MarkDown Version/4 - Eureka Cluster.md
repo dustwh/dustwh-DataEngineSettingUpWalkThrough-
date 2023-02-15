@@ -90,3 +90,9 @@ eureka:
 ```
 
 Run micro-service-cloud-eureka-7001, and use the browser to access“ http://eureka7001.com:7001/ ” From the web page, we can see that the services of the service provider (microservice-cloud-provider-dept-8001) have been registered with Eureka Server 7001, and the DS Replicas option also shows the other two Eureka servers in the cluster: Eureka Server 7002 and Eureka Server 7003\. Run 7002 and 7003 and get the same result.
+
+\<rus result Pic\>
+
+**Note: Now that we are visiting the service through Eureka. We have three eureka servers now. But by visiting http://eureka7001.com:7001/, we are making use of only one of them.**
+
+**We should also visit ****http://eureka7002.com:7002/ or ****http://eureka7003.com:7003/, in this way, we can make use of all three eureka server. But it is not a good way for user. User should remember a list of eureka address. So we need a gateway, and a Load Balancer. we will discuss more about this later.**
