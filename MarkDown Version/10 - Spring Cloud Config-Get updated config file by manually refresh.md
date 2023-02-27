@@ -1,0 +1,1 @@
+In order to solve the problem that the latest configuration cannot be obtained without restarting the Config client, next, we will modify micro-service-cloud-config-client-3355, and the modification steps are as follows.
