@@ -274,7 +274,7 @@ Start micro-service-cloud-eureka-7001, use a browser to visit the homepage of th
 
 ![1010306360-1.png](resources/AC0F4C573D316D9BA1C845930565F06E.png)
 
-### (3) Set-up Service provider (Eureka Client)
+### (4) Set-up Service provider (Eureka Client)
 
 Create a Spring Boot Module named micro-service-cloud-provider-dept-8001 under the main project, and introduce the following dependencies in its pom.xml.
 
@@ -425,7 +425,7 @@ mybatis:
   configuration:
     #The camel case is enabled by default, you don’t need to set this property
     map-underscore-to-camel-case: true
-########################################### Spring cloud custom service name and ip address / Spring cloud 自定义服务名称和 ip 地址###############################################
+########################################### Spring cloud custom service name and ip address###############################################
 eureka:
   client: #Register the client into the eureka service list
     service-url:
