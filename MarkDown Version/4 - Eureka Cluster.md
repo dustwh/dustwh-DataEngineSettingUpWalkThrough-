@@ -19,7 +19,7 @@ In this way, a group of Eureka Server clusters registered with each other can be
 
 Through service synchronization, service consumers can obtain services provided by service providers on any Eureka server in the cluster. In this way, even if a service registry in the cluster fails, the service consumer can still obtain service information from other Eureka servers in the cluster and call it without causing the overall system paralysis, which is the high availability of Eureka Server cluster.
 
-### 3.1 Set up an Eureka Cluster
+### 4.1 Set up an Eureka Cluster
 
 Refer to the building process of micro service cloud-eureka-7001, and create two additional Eureka Servers under the main project: micro service cloud-eureka-7002 and micro service cloud-eureka-7003\. At this time, the three Eureka Servers are the same in terms of Maven dependency, code, and configuration.
 
@@ -90,9 +90,3 @@ eureka:
 ```
 
 Run micro-service-cloud-eureka-7001, and use the browser to access“ http://eureka7001.com:7001/ ” From the web page, we can see that the services of the service provider (microservice-cloud-provider-dept-8001) have been registered with Eureka Server 7001, and the DS Replicas option also shows the other two Eureka servers in the cluster: Eureka Server 7002 and Eureka Server 7003\. Run 7002 and 7003 and get the same result.
-
-\<rus result Pic\>
-
-**Note: Now that we are visiting the service through Eureka. We have three eureka servers now. But by visiting http://eureka7001.com:7001/, we are making use of only one of them.**
-
-**We should also visit ****http://eureka7002.com:7002/ or ****http://eureka7003.com:7003/, in this way, we can make use of all three eureka server. But it is not a good way for user. User should remember a list of eureka address. So we need a gateway, and a Load Balancer. we will discuss more about this later.**

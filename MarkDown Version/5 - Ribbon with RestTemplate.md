@@ -18,7 +18,7 @@ The RestTemplate provides corresponding methods for processing various types of 
 
 Let's use a simple example to demonstrate how the ribbon implements service invocation.
 
-1\. Under the main project DataEngineSwarm, create a microservice named micro-service-cloud-consumer-dept-80, and introduce the required dependencies in its pom.xml. The code is as follows.
+### (1) Under the main project DataEngineSwarm, create a microservice named micro-service-cloud-consumer-dept-80, and introduce the required dependencies in its pom.xml. The code is as follows.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -93,7 +93,7 @@ Let's use a simple example to demonstrate how the ribbon implements service invo
 </project>
 ```
 
-2\. In the classpath (i.e./resource directory), create a new configuration file, application.yml, with the following configuration contents.
+### (2) In the classpath (i.e./resource directory), create a new configuration file, application.yml, with the following configuration contents.
 
 ```yaml
 server:
@@ -107,7 +107,7 @@ eureka:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
 ```
 
-3\. Under the com.luxbp.config package, create a configuration class named ConfigBean and inject the RestTemplate into the container. The code is as follows.
+### (3) Under the com.luxbp.config package, create a configuration class named ConfigBean and inject the RestTemplate into the container. The code is as follows.
 
 ```java
 package com.luxbp.config;
@@ -129,7 +129,7 @@ public class ConfigBean {
 }
 ```
 
-4\. Under the com.luxbp.controller package, create a DeptController\_ The Controller of the Consumer. The request defined in the Controller is used to call the service provided by the server. The code is as follows.
+### (4) Under the com.luxbp.controller package, create a DeptController\_ The Controller of the Consumer. The request defined in the Controller is used to call the service provided by the server. The code is as follows.
 
 ```java
 package com.luxbp.controller;
@@ -157,7 +157,7 @@ public class DeptController_Consumer {
 }
 ```
 
-5\. On the main startup class of micro-service-cloud-consumer-dept-80, use the @ EnableEurekaClient annotation to enable the Eureka client function. The code is as follows.
+### (5) On the main startup class of micro-service-cloud-consumer-dept-80, use the @ EnableEurekaClient annotation to enable the Eureka client function. The code is as follows.
 
 ```java
 package com.luxbp;
@@ -173,9 +173,9 @@ public class MicroServiceCloudConsumerDept80Application {
 }
 ```
 
-6\. Start the service registry micro-service-cloud-eureka-7001, the service provider micro-service-cloud-provider-dept-8001, and the service consumer micro-service-cloud-consumer-dept-800.
+### (6) Start the service registry micro-service-cloud-eureka-7001, the service provider micro-service-cloud-provider-dept-8001, and the service consumer micro-service-cloud-consumer-dept-800.
 
-7\. Now we should see result if visit http://eureka7001.com:80/consumer/dept/list
+### (7) Now we should see result if visit http://eureka7001.com:80/consumer/dept/list
 
 **Ribbon realizes load balancing**
 
@@ -187,7 +187,7 @@ The Spring Cloud Ribbon provides an IRule interface, which is mainly used to def
 
 Next, we will use an instance to verify what policy the ribbon uses to select service instances by default.
 
-1\. Execute the following SQL statements in MySQL database to prepare test data.
+### (1) Execute the following SQL statements in MySQL database to prepare test data.
 
 ```mysql
 DROP DATABASE IF EXISTS spring_cloud_db2;
@@ -232,12 +232,14 @@ INSERT INTO `dept` VALUES ('4', 'marketing', DATABASE());
 INSERT INTO `dept` VALUES ('5', 'dev-ops', DATABASE());
 ```
 
-2\. Refer to micro-service-cloud-provider-dept-8001, and create two microservices: micro-service-cloud-provider-dept-8002 and micro-service-cloud-provider-dept-8003\. Modify the port number, database connection information and custom service name information (eureka. instance. instance id) in application.yml in micro-service-cloud-provider-dept-8002 and 8003
+### (2) Refer to micro-service-cloud-provider-dept-8001, and create two microservices: micro-service-cloud-provider-dept-8002 and micro-service-cloud-provider-dept-8003\. Modify the port number, database connection information and custom service name information (eureka. instance. instance id) in application.yml in micro-service-cloud-provider-dept-8002 and 8003
 
-3\. Start micro-service-cloud-eureka-7001/7002/7003 (service registry cluster), micro-service-cloud-provider-dept-8001/8002/8003 (service provider cluster) and micro-service-cloud-consumer-dept-800 (service consumer).
+### (3) Start micro-service-cloud-eureka-7001/7002/7003 (service registry cluster), micro-service-cloud-provider-dept-8001/8002/8003 (service provider cluster) and micro-service-cloud-consumer-dept-800 (service consumer).
 
 
 
-**Switch LB Strategy and modify specific LB**
+**Note: We can Switch LB Strategy and modify specific LB with Ribbon. Ribbon can also make time-out control strategy using Ribbon.**
 
-**wait to be updated**
+**As we will use another independent components to realize those, so we are not going to explain how to realiaze here in detail for the time being.**
+
+**More doc about how to do these with ribbon will be updated if Xianchen really get some time. Now he’ll focus on upgrading the project to Java 17.**

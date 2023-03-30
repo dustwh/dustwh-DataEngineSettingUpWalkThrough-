@@ -2,7 +2,7 @@ Spring Cloud Gateway implements the matching rules of Route routes through Predi
 
 Let's use an example to demonstrate how Predicate is used.
 
-1\. Create a Spring Boot module named micro-service-cloud-gateway-9527 under the parent project DataEngineSwarm, and introduce relevant dependencies in its pom.xml. The configuration is as follows.
+### (1) Create a Spring Boot module named micro-service-cloud-gateway-9527 under the parent project DataEngineSwarm, and introduce relevant dependencies in its pom.xml. The configuration is as follows.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -63,7 +63,7 @@ Let's use an example to demonstrate how Predicate is used.
 </project>
 ```
 
-2\. In the classpath (/resources directory) of micro-service-cloud-gateway-9527, create a new configuration file application.yml, with the configuration content as follows.
+### (2) In the classpath (/resources directory) of micro-service-cloud-gateway-9527, create a new configuration file application.yml, with the configuration content as follows.
 
 ```yaml
 server:
@@ -92,7 +92,7 @@ eureka:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
 ```
 
-3\. On the main startup class of micro-service-cloud-gateway-9527, use the @ EnableEurekaClient annotation to enable the Eureka client function
+### (3) On the main startup class of micro-service-cloud-gateway-9527, use the @ EnableEurekaClient annotation to enable the Eureka client function
 
 
 
@@ -136,7 +136,55 @@ eureka:
 Filter
 ------
 
-wait to be updated
+Usually, for security reasons, the services provided by the server often have certain verification logic, such as user login status verification, signature verification, etc.
+
+In the microservice architecture, the system consists of multiple microservices, all of which require these verification logics. At this point, we can write these verification logics into the Filter filter of Spring Cloud Gateway.
+
+Spring Cloud Gateway provides the following two types of filters for fine-grained control over requests and responses.
+
+Pre:
+
+ This filter can intercept and modify the request before it is forwarded to the microservice, such as parameter verification, permission verification, traffic monitoring, log output, and 
+
+ protocol conversion.
+
+Post:
+
+ This filter can intercept and reprocess the response after the microservice responds to the request, such as modifying the response content or response header, log output, traffic 
+
+ monitoring, etc.
 
 
 
+Set up a GatewayFilter in the configuration file (such as application.yml) is similar to that of Predicate, and the format is as follows.
+
+```yaml
+spring:
+  cloud:
+    gateway: 
+      routes:
+        - id: xxxx
+          uri: xxxx
+          predicates:
+            - Path=xxxx
+          filters:
+            - AddRequestParameter=X-Request-Id,1024 #The filter factory will add a pair of request headers to the matching request headers, the name is X-Request-Id and the value is 1024
+            - PrefixPath=/dept #add /dept to the front of request path
+            ……
+```
+
+Spring Cloud Gateway has built-in as many as 31 GatewayFilter. See more details at their document pages.
+
+atfer modified filtyer, a re-start is needed.
+
+
+
+Spring cloud also support developer to create a globalFilter. GlobalFilter is a global filter that acts on all routes, through which we can implement some unified business functions, such as authority authentication, IP access restrictions, etc. When a request is matched by a route, all GlobalFilters will be combined with the GatewayFilter configured by the route itself to form a filter chain.
+
+Spring Cloud Gateway provides us with a variety of default GlobalFilter, such as global filters related to forwarding, routing, load balancing, etc. But in actual project development, we usually customize some of our own GlobalFilter global filters to meet our own business needs, and rarely use Spring Cloud Config to provide these default GlobalFilter directly.
+
+For details about the default global filter, please refer to the [Spring Cloud official website](https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#global-filters).
+
+Under 9527 com.luxbp.filter package, there is MyGlobalFilter.java, it gives a show case of how to create a globalFilter. The code in it has been commented. Once un-comment the code, it will take effect. 
+
+The filter filts all the request urls, to examine if the request carry a param “uname”, intercept all the request without param, and will let pass all the request that has the “uname” param.

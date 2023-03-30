@@ -26,17 +26,19 @@ There are two configuration options. register-with-eureka and fetch-registry
 
 Set register-with-eureka to true means register current microservice to Discover Server.
 
-Set register-with-eureka to false means don't register current microservice to Discover Server.Usually, consumer and Eureka server itself don’t need to register in the Discover Server. By default, this option is true.
+Set register-with-eureka to false means don't register current microservice to Discover Server.
 
 set fetch-registry to true means current microservice is fetching services from Discover Server
 
 set fetch-registry to false means current microservice doesn’t need to fetch any services from Discover Server
 
-Typically, a consumer should set register-with-eureka to false, set fetch-registry to true
+By default, both options are set to true.
 
-a provider should either set both to true or at least set register-with-eureka to true
+A consumer should at least set fetch-registry to true. It can also set register-with-eureka to true if he also provide service to other components.
 
-Discover itself should set both to false.
+A provider should at least set register-with-eureka to true. It can also set fetch-registry to true if he also consume(call) services(rest api) from other components.
+
+Eureka discover server itself don’t need to register his service in discover center. Thus most of the time, while we configurating the discover center, we want to keep both set to false.
 
 
 

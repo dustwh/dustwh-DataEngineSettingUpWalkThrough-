@@ -30,9 +30,9 @@ The Spring Cloud Config workflow is as follows:
 
 ### 9.3 Set up a Config Server
 
-(1) Create a repository (Repository) named springcloud-config on Github and get the address of the repository.
+### (1) Create a repository (Repository) named springcloud-config on Github and get the address of the repository.
 
-(2) Under parent project “DataEngineSwarm”, create a module named as micro-service-cloud-config-center-3344\. Add dependency to pom.xml as follows:
+### (2) Under parent project “DataEngineSwarm”, create a module named as micro-service-cloud-config-center-3344\. Add dependency to pom.xml as follows:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -87,7 +87,7 @@ The Spring Cloud Config workflow is as follows:
 </project>
 ```
 
-(3) Under /resources, create the configuration file “application.yml”, the content is as follows:
+### (3) Under /resources, create the configuration file “application.yml”, the content is as follows:
 
 ```yaml
 server:
@@ -120,7 +120,7 @@ management:
         include: 'bus-refresh'
 ```
 
-(4) On the main startup class of micro-service-cloud-config-center-3344, use the @EnableConfigServer annotation to enable the Spring Cloud Config configuration center function, the code is as follows.
+### (4) On the main startup class of micro-service-cloud-config-center-3344, use the @EnableConfigServer annotation to enable the Spring Cloud Config configuration center function, the code is as follows.
 
 ```java
 package com.luxbp;
@@ -143,7 +143,7 @@ public class MicroServiceCloudConfigCenter3344Application {
 
 ```
 
-(5) Create a new file named config-dev.yml and upload it to the main branch of the springcloud-config warehouse. The content of config-dev.yml is as follows.
+### (5) Create a new file named config-dev.yml and upload it to the main branch of the springcloud-config warehouse. The content of config-dev.yml is as follows.
 
 ```yaml
 config:
@@ -151,11 +151,11 @@ config:
   version: 0.0.1
 ```
 
-(6) Run Eureka cluster and micro-service-cloud-config-center-3344, visit “http://localhost:3344/master/config-dev.yml”, result is as follows:
+### (6) Run Eureka cluster and micro-service-cloud-config-center-3344, visit “http://localhost:3344/master/config-dev.yml”, result is as follows:
 
 ![Screen Shot 2023-02-24 at 9.56.00 AM.png](resources/F136D8E96EF5E88EEF6CD8644A10FFD6.png)
 
-(7) modify configuration file access rule:
+### (7) modify configuration file access rule:
 
 Spring Cloud Config specifies a set of configuration file access rules, as shown in the following table:
 
@@ -174,7 +174,7 @@ For example, through configuring correct access rule, we can access the config f
 
 ### 9.4 Set up a Config Client
 
-(1). Under the parent project DataEngineSwarm, create a Spring Boot module named micro-service-cloud-config-client-3355, and add Spring Cloud Config client dependencies to its pom.xml. The configuration content is as follows .
+### (1) Under the parent project DataEngineSwarm, create a Spring Boot module named micro-service-cloud-config-client-3355, and add Spring Cloud Config client dependencies to its pom.xml. The configuration content is as follows .
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -243,7 +243,7 @@ For example, through configuring correct access rule, we can access the config f
 </project>
 ```
 
-(2). Under the classpath (/resources directory) in micro-service-cloud-config-client-3355, create a configuration file named bootstrap.yml, the configuration is as follows.
+### (2) Under the classpath (/resources directory) in micro-service-cloud-config-client-3355, create a configuration file named bootstrap.yml, the configuration is as follows.
 
 ```yaml
 #bootstrap.yml is at system level，loading order is prior to application.yml   Responsible for loading configuration from outside and parsing
@@ -271,7 +271,7 @@ management:
         include: "*"   # * is a keyword in the yaml file, so quotation marks are required
 ```
 
-(3) Under the controller package, create a class named ConfigClientController to obtain the configuration in the configuration file through this class, the code is as follows.
+### (3) Under the controller package, create a class named ConfigClientController to obtain the configuration in the configuration file through this class, the code is as follows.
 
 ```java
 package com.luxbp.controller;
@@ -294,7 +294,7 @@ public class ConfigClientController {
 }
 ```
 
-(4) On the main startup class of micro-service-cloud-config-client-3355, use the @EnableEurekaClient annotation to enable the Eureka client function, the code is as follows.
+### (4) On the main startup class of micro-service-cloud-config-client-3355, use the @EnableEurekaClient annotation to enable the Eureka client function, the code is as follows.
 
 ```java
 package com.luxbp;
@@ -310,11 +310,11 @@ public class MicroServiceCloudConfigClient3355Application {
 }
 ```
 
-(5). Start micro-service-cloud-config-client-3355, use a browser to access "<http://localhost:3355/getConfig>", the result is as shown below.
+### (5) Start micro-service-cloud-config-client-3355, use a browser to access "<http://localhost:3355/getConfig>", the result is as shown below.
 
 ![Screen Shot 2023-02-27 at 9.43.12 AM.png](resources/3A4A199E232B37128E269E5940C93DD2.png)
 
-(6). Change the value of config.version in the configuration file config-dev.yml to 2.0, the configuration is as follows.
+### (6) Change the value of config.version in the configuration file config-dev.yml to 2.0, the configuration is as follows.
 
 ```yaml
 config:
@@ -322,19 +322,21 @@ config:
   version: 0.0.2
 ```
 
-(7). Start the Eureka service registry (cluster) and micro-service-cloud-config-center-3344 in sequence, and use a browser to access "<http://localhost:3344/master/config-dev.yml>", the result is as shown in the figure below.
+### (7) Start the Eureka service registry (cluster) and micro-service-cloud-config-center-3344 in sequence, and use a browser to access "<http://localhost:3344/master/config-dev.yml>", the result is as shown in the figure below.
 
 ![Screen Shot 2023-02-27 at 9.43.57 AM.png](resources/D83B6C321C27BE1C58920306639D7350.png)
 
 It can be seen from the figure that the configuration center has successfully obtained the modified configuration.
 
-(8). Visit "<http://localhost:3355/getConfig>" again, and try to obtain the modified configuration information through the Spring Cloud Config client. The result is as shown in the figure below.
+### (8) Visit "<http://localhost:3355/getConfig>" again, and try to obtain the modified configuration information through the Spring Cloud Config client. The result is as shown in the figure below.
 
 ![Screen Shot 2023-02-27 at 9.43.12 AM.png](resources/3A4A199E232B37128E269E5940C93DD2.png)
 
-(9). Restart micro-service-cloud-config-client-3355, and access "<http://localhost:3355/getConfig>" again, the result is as shown below
+### (9) Restart micro-service-cloud-config-client-3355, and access "<http://localhost:3355/getConfig>" again, the result is as shown below
 
 ![Screen Shot 2023-02-27 at 9.43.57 AM.png](resources/D83B6C321C27BE1C58920306639D7350.png)
+
+
 
 Through this example, we can get the following two conclusions:
 

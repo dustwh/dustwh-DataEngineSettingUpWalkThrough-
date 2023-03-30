@@ -24,7 +24,7 @@ OpenFeign implements remote service calls
 
 Next, let's demonstrate how to implement remote service calls through OpenFeign through an example.
 
-1\. Create a Spring Boot module called micro-service-cloud-consumer-dept-feign under DataEngineSwarm and add it to pom.xml The following dependencies.
+### (1) Create a Spring Boot module called micro-service-cloud-consumer-dept-feign under DataEngineSwarm and add it to pom.xml The following dependencies.
 
 ```xml
 <? xml version="1.0" encoding="UTF-8"? >
@@ -99,7 +99,7 @@ Next, let's demonstrate how to implement remote service calls through OpenFeign 
 </project>
 ```
 
-2\. Under the class path under micro-service-cloud-consumer-dept-feign (i.e. /resources directory), add an application.yml, which is configured below.
+### (2) Under the class path under micro-service-cloud-consumer-dept-feign (i.e. /resources directory), add an application.yml, which is configured below.
 
 ```yaml
 server:
@@ -112,11 +112,11 @@ eureka:
     fetch-registry: true
 ```
 
-3\. Create an interface named DeptFeignService under the net.biancheng.c.service package, and bind the service interface with @FeignClient annotation on this interface, as follows.
+### (3) Create an interface named DeptFeignService under the com.luxbp.service package, and bind the service interface with @FeignClient annotation on this interface, as follows.
 
 ```java
-package net.biancheng.c.service;
-Import net.biancheng.c.entity.Dept;
+package com.luxbp.service;
+Import com.luxbp.entity.Dept;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -141,12 +141,12 @@ When writing the service binding interface, you need to pay attention to the fol
 * In the @FeignClient annotation, the value attribute is: the service name of the service provider, that is, the value of spring.application.name in the service provider profile (application.yml).
 * Each method defined in the interface corresponds to the service method defined by Controller in the service provider (i.e. micro-service-cloud-provider-dept-8001, etc.).
 
-4\. Under the net.biancheng.c.controller package, create a Controller class named DeptController\_Consumer, as follows.
+### (4) Under the com.luxbp.controller package, create a Controller class named DeptController\_Consumer, as follows.
 
 ```java
-package net.biancheng.c.controller;
-Import net.biancheng.c.entity.Dept;
-import net.biancheng.c.service.DeptFeignService;
+package com.luxbp.controller;
+Import com.luxbp.entity.Dept;
+import com.luxbp.service.DeptFeignService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -168,10 +168,10 @@ public class DeptController_Consumer {
 }
 ```
 
-5\. Add @EnableFeignClients annotation to the main startup class to turn on the OpenFeign function, the code is as follows.
+### (5) Add @EnableFeignClients annotation to the main startup class to turn on the OpenFeign function, the code is as follows.
 
 ```java
-package net.biancheng.c;
+package com.luxbp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -186,15 +186,13 @@ SpringApplication.run (MicroServiceCloudConsumerDeptFeignApplication.class, args
 
 When the Spring Cloud application starts up, OpenFeign scans the interface generation agent marked with @FeignClient annotation and annotates the person into the Spring container.
 
-6\. Start the service registry cluster, service provider and micro-service-cloud-consumer-dept-feign in turn. After startup, use the browser to visit http://eureka7001.com/con sumer/dept/list",
+(6) Start the service registry cluster, service provider and micro-service-cloud-consumer-dept-feign in turn. After startup, use the browser to visit http://eureka7001.com/con sumer/dept/list",
 
-7\. Visits to http://eureka7001.com/consumer/dept/list several times in a row
+### (7) Visits to http://eureka7001.com/consumer/dept/list several times in a row
 
 
 
-**Time out Control**
+**Note: Open-feign has the ability to do time-out control. Time out control in open-feign is actually realize by Ribbon. And as mentioned in the previous chapter, we are going to use an independent conponent to do this. so we are not going to explain how to do this here, for the time being.**
 
-**
-**
+**More doc about how to do these with ribbon will be updated if Xianchen really get some time. Now he’ll focus on upgrading the project to Java 17.**
 
-wait to be update
